@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>net.thwack.apiblueprint</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>modules</artifactId>
+  <packaging>pom</packaging>
+  <name>API Blueprint :: Modules</name>
+
+  <modules>
+    <module>parent</module>
+    <module>net.thwack.apiblueprint.model</module>
+    <module>net.thwack.apiblueprint.acceleo</module>
+    <module>net.thwack.apiblueprint.acceleo.ui</module>
+    <module>net.thwack.apiblueprint.feature</module>
+    <module>update-site</module>
+  </modules>
+</project>

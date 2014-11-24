@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.apib"
+            
+            id="net.thwack.apiblueprint.acceleo.ui.popupMenus.contribution.IFile">
+         <menu id="net.thwack.apiblueprint.module.menu" label="API Blueprint" path="additionsAPIBlueprint">
+               <groupMarker name="net.thwack.apiblueprint"/> 
+         </menu>
+         <action
+               class="net.thwack.apiblueprint.acceleo.ui.popupMenus.AcceleoGenerateGenerateJavaCodeAction"
+               enablesFor="+"
+               id="net.thwack.apiblueprint.acceleo.ui.popupMenus.acceleoGenerateGenerateJavaCodeAction"
+               icon="icons/default.gif"
+               label="Generate Java code"
+               menubarPath="net.thwack.apiblueprint.module.menu/net.thwack.apiblueprint"/>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type base-type="org.eclipse.mylyn.wikitext"
+                    file-extensions="apib"
+                    id="net.thwack.apiblueprint.acceleo.ui.contenttype.apib"
+                    name="API Blueprint"
+                    priority="normal">
+      </content-type>
+   </extension>
+   
+   <extension point="org.eclipse.mylyn.wikitext.core.markupLanguage">
+      <language class="org.eclipse.mylyn.wikitext.markdown.core.MarkdownLanguage"
+            name="Markdown" fileExtensions="apib">
+      </language>
+   </extension>
+</plugin>
