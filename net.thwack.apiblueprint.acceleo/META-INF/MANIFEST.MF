@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: API Blueprint Java Code Generator
 Bundle-SymbolicName: net.thwack.apiblueprint.acceleo
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: net.thwack.apiblueprint.acceleo.Activator
 Bundle-Vendor: thwack.net
 Require-Bundle: org.eclipse.core.runtime,
@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.acceleo.profiler;bundle-version="3.3.0",
  org.eclipse.acceleo.engine;bundle-version="3.3.0",
  com.google.guava,
- net.thwack.apiblueprint.model;bundle-version="0.1.0",
+ net.thwack.apiblueprint.model;bundle-version="0.1.1",
  org.codehaus.jackson.mapper;bundle-version="1.6.0",
  org.codehaus.jackson.core;bundle-version="1.6.0",
  org.eclipse.core.resources
