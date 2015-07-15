@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>net.thwack.apiblueprint</groupId>
+    <groupId>net.thwack.eclipse.apiblueprint.java_generator</groupId>
     <artifactId>parent</artifactId>
     <version>0.1.1-SNAPSHOT</version>
     <relativePath>parent/pom.xml</relativePath>
@@ -10,14 +10,14 @@
 
   <artifactId>modules</artifactId>
   <packaging>pom</packaging>
-  <name>API Blueprint :: Modules</name>
+  <name>API Blueprint Java Code Generator for Eclipse :: Modules</name>
 
   <modules>
     <module>parent</module>
-    <module>net.thwack.apiblueprint.model</module>
-    <module>net.thwack.apiblueprint.acceleo</module>
-    <module>net.thwack.apiblueprint.acceleo.ui</module>
-    <module>net.thwack.apiblueprint.feature</module>
+    <module>net.thwack.eclipse.apiblueprint.java_generator.model</module>
+    <module>net.thwack.eclipse.apiblueprint.java_generator.acceleo</module>
+    <module>net.thwack.eclipse.apiblueprint.java_generator.acceleo.ui</module>
+    <module>net.thwack.eclipse.apiblueprint.java_generator.feature</module>
     <module>update-site</module>
   </modules>
 </project>

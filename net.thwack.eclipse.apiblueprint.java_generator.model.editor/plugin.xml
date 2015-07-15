@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated net.thwack.eclipse.apiblueprint.java_generator.model -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="net.thwack.eclipse.apiblueprint.java_generator.model.presentation.APIBlueprintModelModelWizardID"
+            name="%_UI_APIBlueprintModelModelWizard_label"
+            class="net.thwack.eclipse.apiblueprint.java_generator.model.presentation.APIBlueprintModelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/APIBlueprintModelModelFile.gif">
+         <description>%_UI_APIBlueprintModelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated net.thwack.eclipse.apiblueprint.java_generator.model -->
+      <editor
+            id="net.thwack.eclipse.apiblueprint.java_generator.model.presentation.APIBlueprintModelEditorID"
+            name="%_UI_APIBlueprintModelEditor_label"
+            icon="icons/full/obj16/APIBlueprintModelModelFile.gif"
+            extensions="apibmodel"
+            class="net.thwack.eclipse.apiblueprint.java_generator.model.presentation.APIBlueprintModelEditor"
+            contributorClass="net.thwack.eclipse.apiblueprint.java_generator.model.presentation.APIBlueprintModelActionBarContributor">
+      </editor>
+   </extension>
+</plugin>

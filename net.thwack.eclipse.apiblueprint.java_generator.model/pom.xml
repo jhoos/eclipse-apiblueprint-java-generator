@@ -8,7 +8,15 @@
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
-  <artifactId>update-site</artifactId>
-  <packaging>eclipse-repository</packaging>
-  <name>API Blueprint Java Code Generator for Eclipse :: Update Site</name>
+  <artifactId>net.thwack.eclipse.apiblueprint.java_generator.model</artifactId>
+  <packaging>eclipse-plugin</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>

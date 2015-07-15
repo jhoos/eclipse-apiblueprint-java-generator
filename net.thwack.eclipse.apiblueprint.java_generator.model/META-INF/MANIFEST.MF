@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: net.thwack.eclipse.apiblueprint.java_generator.model
+Bundle-SymbolicName: net.thwack.eclipse.apiblueprint.java_generator.model;singleton:=true
+Bundle-Version: 0.1.1.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: thwack.net
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: net.thwack.eclipse.apiblueprint.java_generator.model,
+ net.thwack.eclipse.apiblueprint.java_generator.model.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport
+Bundle-ActivationPolicy: lazy

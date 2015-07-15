@@ -8,7 +8,7 @@
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
-  <artifactId>update-site</artifactId>
-  <packaging>eclipse-repository</packaging>
-  <name>API Blueprint Java Code Generator for Eclipse :: Update Site</name>
+  <artifactId>net.thwack.eclipse.apiblueprint.java_generator.feature</artifactId>
+  <packaging>eclipse-feature</packaging>
+  <name>API Blueprint Java Code Generator for Eclipse :: Feature</name>
 </project>

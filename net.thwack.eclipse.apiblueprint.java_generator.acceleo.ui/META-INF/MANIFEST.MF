@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: API Blueprint Java Code Generator UI
+Bundle-SymbolicName: net.thwack.eclipse.apiblueprint.java_generator.acceleo.ui;singleton:=true
+Bundle-Version: 0.1.1.qualifier
+Bundle-Activator: net.thwack.eclipse.apiblueprint.java_generator.acceleo.ui.Activator
+Bundle-Vendor: thwack.net
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ net.thwack.eclipse.apiblueprint.java_generator.acceleo,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.ocl,
+ org.eclipse.ocl.ecore,
+ org.eclipse.acceleo.model,
+ org.eclipse.acceleo.engine,
+ org.eclipse.ui.ide,
+ org.eclipse.jdt.ui;bundle-version="3.10.1",
+ org.eclipse.jdt.core;bundle-version="3.10.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true

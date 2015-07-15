@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/net.thwack.apiblueprint.feature_0.1.1.qualifier.jar" id="net.thwack.apiblueprint.feature" version="0.1.1.qualifier">
-      <category name="net.thwack.apiblueprint.category"/>
+   <feature url="features/net.thwack.eclipse.apiblueprint.java_generator.feature_0.1.1.qualifier.jar" id="net.thwack.eclipse.apiblueprint.java_generator.feature" version="0.1.1.qualifier">
+      <category name="net.thwack.eclipse.apiblueprint.java_generator.category"/>
    </feature>
-   <category-def name="net.thwack.apiblueprint.category" label="API Blueprint Tools"/>
+   <category-def name="net.thwack.eclipse.apiblueprint.java_generator.category" label="API Blueprint Tools"/>
 </site>
