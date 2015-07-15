@@ -22,18 +22,17 @@ import org.eclipse.swt.widgets.Composite;
  * Asks for the source folder and package name to use when creating the Java
  * classes for the REST API Blueprint.
  */
-public class GenerateWizardPage extends NewTypeWizardPage {
+public class RepresentationTestsPage extends NewTypeWizardPage {
 	/**
 	 * Constructor
 	 * 
 	 * @param selection
 	 *            the selection from the action that is triggering this dialog
 	 */
-	public GenerateWizardPage(ISelection selection) {
+	public RepresentationTestsPage(ISelection selection) {
 		super(CLASS_TYPE, "wizardPage");
 		setTitle("Generate Java From REST API Blueprint");
-		setDescription("Generates Java class skeletons for the REST resources"
-				+ " and representations specified in an API Blueprint document.");
+		setDescription("Specify where to generate REST Representation unit tests");
 		setDefaultPackageFragmentRoot(selection);
 	}
 

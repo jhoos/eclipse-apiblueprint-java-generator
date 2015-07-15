@@ -1,5 +1,5 @@
 [comment encoding = UTF-8 /]
-[module generate('http://thwack.net/model/apiblueprint')]
+[module generateResources('http://thwack.net/model/apiblueprint')]
 [import net::thwack::apiblueprint::acceleo::files::generate-resource]
 
 [template public generateElement(blueprint : APIBlueprint, javaPackage: String)]

@@ -10,13 +10,15 @@
  *******************************************************************************/
 package net.thwack.apiblueprint.acceleo.ui.popupMenus;
 
-import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
 
+import net.thwack.apiblueprint.acceleo.main.AbstractGenerator;
+import net.thwack.apiblueprint.acceleo.main.GenerateResources;
 import net.thwack.apiblueprint.acceleo.ui.Activator;
-import net.thwack.apiblueprint.acceleo.ui.common.GenerateAll;
+import net.thwack.apiblueprint.acceleo.ui.common.GenerationParameters;
 import net.thwack.apiblueprint.acceleo.ui.wizards.GenerateWizard;
 
 import org.eclipse.core.resources.IFile;
@@ -25,6 +27,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
@@ -40,6 +43,47 @@ import org.eclipse.ui.statushandlers.StatusManager;
  */
 public class AcceleoGenerateGenerateJavaCodeAction extends ActionDelegate
 		implements IActionDelegate {
+
+	private final class GenerationRunner implements IRunnableWithProgress {
+		private final List<IFile> files;
+		private final IResource target;
+		private final String javaPackage;
+		private final Class<? extends AbstractGenerator> generatorClass;
+
+		private GenerationRunner(List<IFile> files, Class<? extends AbstractGenerator> generatorClass, IResource target, String javaPackage) {
+			this.files = files;
+			this.generatorClass = generatorClass;
+			this.javaPackage = javaPackage;
+			this.target = target;
+		}
+
+		public void run(IProgressMonitor monitor) {
+			try {
+				Iterator<IFile> filesIt = files.iterator();
+				while (filesIt.hasNext()) {
+					IFile model = (IFile) filesIt.next();
+					try {
+						Constructor<? extends AbstractGenerator> constructor = generatorClass.getConstructor(model.getClass(), IResource.class, String.class);
+						AbstractGenerator generator = constructor.newInstance(model,
+								target,
+								javaPackage);
+						generator.doGenerate(BasicMonitor.toMonitor(monitor));
+					} finally {
+						model.getProject().refreshLocal(
+								IResource.DEPTH_INFINITE, monitor);
+					}
+				}
+			} catch (CoreException e) {
+				StatusManager.getManager().handle(e,
+						Activator.PLUGIN_ID);
+			} catch (Exception e) {
+				IStatus status = new Status(IStatus.ERROR,
+						Activator.PLUGIN_ID, e.getMessage(), e);
+				StatusManager.getManager().handle(status,
+						StatusManager.SHOW | StatusManager.LOG);
+			}
+		}
+	}
 
 	/**
 	 * Selected model files.
@@ -74,35 +118,10 @@ public class AcceleoGenerateGenerateJavaCodeAction extends ActionDelegate
 	}
 
 	@SuppressWarnings("unchecked")
-	public void doGeneration(final IResource target, final String javaPackage) {
+	public void doGeneration(final GenerationParameters params) {
 		final List<IFile> files = selection.toList();
 		if (files != null) {
-			IRunnableWithProgress operation = new IRunnableWithProgress() {
-				public void run(IProgressMonitor monitor) {
-					try {
-						Iterator<IFile> filesIt = files.iterator();
-						while (filesIt.hasNext()) {
-							IFile model = (IFile) filesIt.next();
-							try {
-								GenerateAll generator = new GenerateAll(model,
-										target, javaPackage);
-								generator.doGenerate(monitor);
-							} finally {
-								model.getProject().refreshLocal(
-										IResource.DEPTH_INFINITE, monitor);
-							}
-						}
-					} catch (IOException e) {
-						IStatus status = new Status(IStatus.ERROR,
-								Activator.PLUGIN_ID, e.getMessage(), e);
-						StatusManager.getManager().handle(status,
-								StatusManager.SHOW | StatusManager.LOG);
-					} catch (CoreException e) {
-						StatusManager.getManager().handle(e,
-								Activator.PLUGIN_ID);
-					}
-				}
-			};
+			IRunnableWithProgress operation = new GenerationRunner(files, GenerateResources.class, params.getResourceTarget(), params.getResourceJavaPackage());
 			try {
 				PlatformUI.getWorkbench().getProgressService()
 						.run(true, true, operation);

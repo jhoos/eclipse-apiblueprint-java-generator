@@ -1,8 +1,8 @@
 package net.thwack.apiblueprint.acceleo.ui.wizards;
 
+import net.thwack.apiblueprint.acceleo.ui.common.GenerationParameters;
 import net.thwack.apiblueprint.acceleo.ui.popupMenus.AcceleoGenerateGenerateJavaCodeAction;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -20,7 +20,8 @@ import org.eclipse.ui.IWorkbenchWizard;
  */
 
 public class GenerateWizard extends Wizard implements INewWizard {
-	private GenerateWizardPage page;
+	private ResourceClassesPage resourcePage;
+	private RepresentationTestsPage representationTestPage;
 	private ISelection selection;
 	private AcceleoGenerateGenerateJavaCodeAction parentAction;
 	
@@ -38,8 +39,10 @@ public class GenerateWizard extends Wizard implements INewWizard {
 	 */
 
 	public void addPages() {
-		page = new GenerateWizardPage(selection);
-		addPage(page);
+		resourcePage = new ResourceClassesPage(selection);
+		addPage(resourcePage);
+		representationTestPage = new RepresentationTestsPage(selection);
+		addPage(representationTestPage);
 	}
 
 	/**
@@ -47,11 +50,14 @@ public class GenerateWizard extends Wizard implements INewWizard {
 	 * will create an operation and run it using wizard as execution context.
 	 */
 	public boolean performFinish() {
-		final String pkg = page.getPackageText();
-		final IResource sourceFolder = page.getPackageFragmentRoot()
-				.getResource();
-		
-		parentAction.doGeneration(sourceFolder, pkg);
+		GenerationParameters params = new GenerationParameters();
+		params.setResourceTarget(resourcePage.getPackageFragmentRoot()
+				.getResource());
+		params.setResourceJavaPackage(resourcePage.getPackageText());
+		params.setRepresentationJavaPackage(representationTestPage.getPackageText());
+		params.setRepresentationTestTarget(representationTestPage.getPackageFragmentRoot().getResource());
+
+		parentAction.doGeneration(params);
 
 		return true;
 	}

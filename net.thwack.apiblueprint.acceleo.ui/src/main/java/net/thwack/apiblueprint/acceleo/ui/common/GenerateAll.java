@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.thwack.apiblueprint.acceleo.Activator;
+import net.thwack.apiblueprint.acceleo.main.AbstractGenerator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -79,7 +80,7 @@ public class GenerateAll {
 		}
 
 		monitor.subTask("Loading...");
-		net.thwack.apiblueprint.acceleo.main.Generate gen0 = new net.thwack.apiblueprint.acceleo.main.Generate(
+		AbstractGenerator gen0 = new net.thwack.apiblueprint.acceleo.main.GenerateResources(
 				model.getContents(), targetFolder.getLocation().toFile(),
 				javaPackage);
 		monitor.worked(1);

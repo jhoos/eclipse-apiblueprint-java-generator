@@ -14,22 +14,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.thwack.apiblueprint.acceleo.Activator;
-import net.thwack.apiblueprint.model.APIBlueprint;
 import net.thwack.apiblueprint.model.APIBlueprintModelPackage;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.acceleo.engine.event.IAcceleoTextGenerationListener;
 import org.eclipse.acceleo.engine.generation.strategy.IAcceleoGenerationStrategy;
-import org.eclipse.acceleo.engine.service.AbstractAcceleoGenerator;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.BasicMonitor;
-import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -37,15 +30,15 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * Entry point of the 'Generate' generation module.
  *
- * @generated
+ * @generated NOT
  */
-public class Generate extends AbstractAcceleoGenerator {
+public class GenerateResources extends AbstractGenerator {
 	/**
 	 * The name of the module.
 	 *
 	 * @generated
 	 */
-	public static final String MODULE_FILE_NAME = "generate";
+	public static final String MODULE_FILE_NAME = "generateResources";
 
 	/**
 	 * The name of the templates that are to be generated.
@@ -76,7 +69,7 @@ public class Generate extends AbstractAcceleoGenerator {
 	 *
 	 * @generated
 	 */
-	public Generate() {
+	public GenerateResources() {
         // Empty implementation
     }
 
@@ -99,7 +92,7 @@ public class Generate extends AbstractAcceleoGenerator {
 	 *             found, it cannot be loaded, or the model cannot be loaded.
 	 * @generated
 	 */
-	public Generate(URI modelURI, File targetFolder,
+	public GenerateResources(URI modelURI, File targetFolder,
 			List<? extends Object> arguments) throws IOException {
         initialize(modelURI, targetFolder, arguments);
     }
@@ -122,19 +115,9 @@ public class Generate extends AbstractAcceleoGenerator {
 	 *             found, it cannot be loaded, or the model cannot be loaded.
 	 * @generated NOT
 	 */
-	public Generate(InputStream model, File targetFolder, String javaPackage)
+	public GenerateResources(InputStream model, File targetFolder, String javaPackage)
 			throws CoreException {
-		try (InputStream jsonStream = blueprintToJson(model)) {
-			ObjectMapper mapper = new ObjectMapper();
-			APIBlueprint blueprint = mapper.readValue(jsonStream,
-					APIBlueprint.class);
-			List<String> args = new ArrayList<>();
-			args.add(javaPackage);
-			initialize(blueprint, targetFolder, args);
-		} catch (Exception e) {
-			throw new CoreException(new Status(Status.ERROR,
-					Activator.PLUGIN_ID, e.getLocalizedMessage(), e));
-		}
+		super(model, targetFolder, javaPackage);
 	}
 
 	/**
@@ -156,39 +139,10 @@ public class Generate extends AbstractAcceleoGenerator {
 	 *             found, or it cannot be loaded.
 	 * @generated
 	 */
-	public Generate(EObject model, File targetFolder,
+	public GenerateResources(EObject model, File targetFolder,
 			List<? extends Object> arguments) throws IOException {
         initialize(model, targetFolder, arguments);
     }
-
-	/**
-	 * @throws IOException
-	 * @generated NOT
-	 */
-	public InputStream blueprintToJson(final InputStream blueprintFile)
-			throws IOException {
-		ProcessBuilder pb = new ProcessBuilder("/usr/local/bin/snowcrash",
-				"--format=json");
-		final Process proc = pb.start();
-		Thread th = new Thread() {
-			@Override
-			public void run() {
-				try (InputStream bpf = blueprintFile;
-						OutputStream of = proc.getOutputStream()) {
-					byte[] buffer = new byte[4096];
-					int bytes;
-					while ((bytes = bpf.read(buffer)) > 0) {
-						of.write(buffer, 0, bytes);
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		};
-		th.start();
-		return proc.getInputStream();
-	}
 
 	/**
 	 * This can be used to launch the generation from a standalone application.
@@ -225,8 +179,8 @@ public class Generate extends AbstractAcceleoGenerator {
 				 * "arguments" this "String" attribute.
 				 */
 
-				Generate generator;
-				generator = new Generate(new FileInputStream(model), folder,
+				AbstractGenerator generator;
+				generator = new GenerateResources(new FileInputStream(model), folder,
 						javaPackage);
 
 				generator.doGenerate(new BasicMonitor());
@@ -234,49 +188,6 @@ public class Generate extends AbstractAcceleoGenerator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Launches the generation described by this instance.
-	 * 
-	 * @param monitor
-	 *            This will be used to display progress information to the user.
-	 * @throws IOException
-	 *             This will be thrown if any of the output files cannot be
-	 *             saved to disk.
-	 * @generated NOT
-	 */
-	@Override
-	public void doGenerate(Monitor monitor) throws IOException {
-		/*
-		 * TODO if you wish to change the generation as a whole, override this.
-		 * The default behavior should be sufficient in most cases. If you want
-		 * to change the content of this method, do NOT forget to change the
-		 * "@generated" tag in the Javadoc of this method to "@generated NOT".
-		 * Without this new tag, any compilation of the Acceleo module with the
-		 * main template that has caused the creation of this class will revert
-		 * your modifications. If you encounter a problem with an unresolved
-		 * proxy during the generation, you can remove the comments in the
-		 * following instructions to check for problems. Please note that those
-		 * instructions may have a significant impact on the performances.
-		 */
-
-		org.eclipse.emf.ecore.util.EcoreUtil.resolveAll(model);
-
-		/*
-		 * If you want to check for potential errors in your models before the
-		 * launch of the generation, you use the code below.
-		 */
-
-		if (model != null && model.eResource() != null) {
-			List<org.eclipse.emf.ecore.resource.Resource.Diagnostic> errors = model
-					.eResource().getErrors();
-			for (org.eclipse.emf.ecore.resource.Resource.Diagnostic diagnostic : errors) {
-				System.err.println(diagnostic.toString());
-			}
-		}
-
-		super.doGenerate(monitor);
 	}
 
 	/**
